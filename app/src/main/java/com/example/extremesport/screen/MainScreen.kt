@@ -1,7 +1,9 @@
 package com.example.extremesport.screen
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.graphics.Color.parseColor
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -31,6 +34,7 @@ import com.example.extremesport.Screens
 import com.example.extremesport.view.ESViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -137,13 +141,17 @@ fun Map(){
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(tromsoo, 6f)
     }
+    val context = LocalContext.current
 
     var uiSettings by remember { mutableStateOf(MapUiSettings()) }
+
+    val mapProperties by remember { mutableStateOf(MapProperties(mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)))}
 
     val googleMap = GoogleMap(
         modifier = Modifier.fillMaxSize(),
         cameraPositionState = cameraPositionState,
-        uiSettings =  MapUiSettings()
+        uiSettings =  uiSettings,
+        properties = mapProperties
     ) {
         Markers()
     }
