@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,14 +20,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.extremesport.R
 import com.example.extremesport.view.ESViewModel
+import androidx.compose.material.Switch
 
 
 data class Setting(
     val description: String,
     val icon_id: Int = R.drawable.baseline_mode_night_24_black, // Maybe change to another default image
     val contentDescription: String = "",
-    val buttonText: String = "",
-    val onClick: () -> Unit
+    val Switch: Boolean = false,
+    val onClick: () -> Unit,
 ) {
     @Composable
     fun DisplaySetting() {
@@ -47,12 +47,12 @@ data class Setting(
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.weight(1f))
-            Button(onClick = onClick) {
-                Text(text = buttonText)
-            }
+            Switch(
+                checked = Switch,
+                onCheckedChange = { isChecked -> onClick() },
+            )
         }
     }
-
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -63,18 +63,27 @@ fun SettingsScreen(viewModel: ESViewModel) {
         Setting(
             description = "Night Mode",
             contentDescription = "Logo for night mode",
-            buttonText = "Test",
+            onClick = {},
+        ),
+        Setting(
+            description = "[Ny setting]",
+            //icon = "new image here",
+            contentDescription = "Ny setting",
             onClick = {}
         ),
         Setting(
-            description = "Ny setting",
+            description = "[Ny setting]",
             //icon = "new image here",
             contentDescription = "Ny setting",
-            buttonText = "Test",
             onClick = {}
-        )
+        ),
+        Setting(
+            description = "[Ny setting]",
+            //icon = "new image here",
+            contentDescription = "Ny setting",
+            onClick = {}
+        ),
     )
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter

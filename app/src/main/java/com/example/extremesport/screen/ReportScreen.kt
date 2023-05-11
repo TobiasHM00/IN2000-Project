@@ -80,7 +80,7 @@ fun ReportScreen(viewModel: ESViewModel) {
                     Text(text = "Hvilket problem opplever du?")
                     DropDownMenu()
                     Spacer(modifier = Modifier.padding(40.dp))
-                    Text(text = "Beskriv problemet dypere")
+                    Text(text = "Beskriv problemet")
                     ReportBox(scope, snackbarHostState)
                 }
             }
