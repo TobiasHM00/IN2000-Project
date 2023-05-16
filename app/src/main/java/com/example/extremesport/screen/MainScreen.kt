@@ -40,7 +40,9 @@ import kotlin.math.round
 
 val String.color get() = Color(parseColor(this))
 var boolShow by mutableStateOf(false)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter", "SimpleDateFormat")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter", "SimpleDateFormat",
+    "StateFlowValueCalledInComposition"
+)
 @Composable
 fun MainScreen (viewModel: ESViewModel, innerPadding: PaddingValues) {
     var currentMarkerId by remember { mutableStateOf("") }
@@ -73,7 +75,8 @@ fun MainScreen (viewModel: ESViewModel, innerPadding: PaddingValues) {
             }
         )
         if (boolShow) {
-            val info = viewModel.getInfo()
+            loadAPIs(viewModel)
+            val info = viewModel.esState.value.getInfo()
             val jsonInfo = viewModel.returnLocations()?.locations?.find { it.latitude == clickedMarker?.position?.latitude && it.longitude == clickedMarker?.position?.longitude }
             val checkReq = viewModel.checkRequirements("Fallskjermhopping")
             ShowWeatherBox(
