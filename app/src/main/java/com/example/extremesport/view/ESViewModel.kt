@@ -126,49 +126,6 @@ class ESViewModel(appDataContainer: AppDataContainer?): ViewModel() {
         return numbAverage
     }
 
-    fun getInfo(): RequirementsResult {
-        var summaryCode1 = "NaN"
-        var summaryCode6 = "NaN"
-        var summaryCode12 = "NaN"
-        var currentTemp = 0.0
-        var highTemp1 = 0.0
-        var lowTemp1 = 0.0
-        var highTemp6 = 0.0
-        var lowTemp6 = 0.0
-        var highTemp12 = 0.0
-        var lowTemp12 = 0.0
-        var windStrength = 0.0
-        var windDirection = 0.0
-        var openAddressName = "NaN"
-
-        _esState.update { currentState ->
-            try {
-                //val nowcastData = currentState.nowcast?.properties?.timeseries?.get(0)?.data!!
-                val locationForecastData = currentState.locationForecast?.properties?.timeseries?.get(0)?.data!!
-                //val sunriseData = currentState.sunrise?.properties!!
-                val openAddressData = currentState.openAdress?.adresser?.get(0)!!
-
-                summaryCode1 = locationForecastData.next_1_hours.summary.symbol_code
-                summaryCode6 = locationForecastData.next_6_hours.summary.symbol_code
-                summaryCode12 = locationForecastData.next_12_hours.summary.symbol_code
-                currentTemp = locationForecastData.instant.details.air_temperature
-                highTemp1 = locationForecastData.next_1_hours.details.air_temperature_max
-                lowTemp1 = locationForecastData.next_1_hours.details.air_temperature_min
-                highTemp6 = locationForecastData.next_6_hours.details.air_temperature_max
-                lowTemp6 = locationForecastData.next_6_hours.details.air_temperature_min
-                highTemp12 = locationForecastData.next_12_hours.details.air_temperature_max
-                lowTemp12 = locationForecastData.next_12_hours.details.air_temperature_min
-                windStrength = locationForecastData.instant.details.wind_speed
-                windDirection = locationForecastData.instant.details.wind_from_direction
-                openAddressName = openAddressData.adressenavn
-            } catch (_: Exception) {
-
-            }
-            currentState.copy()
-        }
-        return RequirementsResult(summaryCode1, summaryCode6, summaryCode12, currentTemp, highTemp1, lowTemp1, highTemp6, lowTemp6, highTemp12, lowTemp12, windStrength, windDirection, openAddressName)
-    }
-
     //Hjelpemetode for å sammenligne tidspunkter på dagen.
     fun compareTime(sunriseAPITime: String): Boolean {
         val rightNow: Calendar = Calendar.getInstance()
